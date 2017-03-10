@@ -2,18 +2,22 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './index.css';
 import PronunciationTool from '../../components/PronunciationTool';
+import Singer from '../../components/Singer';
 
 export default class Home extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      rawWords: "these words are my own"
+      rawWords: "these words are my own",
+      pronunciationToolReady: false
     }
+    this.singer = new Singer();
     PronunciationTool.init(true, function() {
-      console.log("DONE");
-      console.log(PronunciationTool.getPronunciation("HELLO"));
-    });
+      this.setState({
+        pronunciationToolReady: true
+      })
+    }.bind(this));
   }
 
   onTextChange(ev) {
@@ -24,16 +28,26 @@ export default class Home extends React.Component {
 
   onSubmit(ev) {
     ev.preventDefault();
+    this.singer.addToWordQueue(this.state.rawWords.split(" "));
+    this.setState({
+      rawWords: ""
+    })
   }
 
   render() {
     return(
       <div className={classNames(styles.this)}>
-        <h1>testing</h1>
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <textarea value={this.state.rawWords} onChange={this.onTextChange.bind(this)}/><br/>
-          <input type="submit" value="Load words"></input>
-        </form>
+        {this.state.pronunciationToolReady ?
+          <div>
+            <h1>testing</h1>
+            <form onSubmit={this.onSubmit.bind(this)}>
+              <textarea value={this.state.rawWords} onChange={this.onTextChange.bind(this)}/><br/>
+              <input type="submit" value="Load words"></input>
+            </form>
+          </div>
+          :
+          <p>Loading...</p>
+        }
       </div>
     )
   }
