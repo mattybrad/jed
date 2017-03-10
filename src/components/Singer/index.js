@@ -197,10 +197,10 @@ export default class Singer {
   }
 
   setFormant() {
-    this.filter1.frequency.value = 250;
+    this.filter1.frequency.value = 250 + Math.random()*500;
     this.filter1.Q.value = 10;
     this.filter1Gain.gain.value = 1;
-    this.filter2.frequency.value = 595;
+    this.filter2.frequency.value = 595 + Math.random()*2000;
     this.filter2.Q.value = 10;
     this.filter2Gain.gain.value = 1;
     // this.filter1.frequency.value = 240;
@@ -221,6 +221,9 @@ export default class Singer {
     } else {
       this.currentWord = null;
     }
-    if(this.currentWord) console.log(this.currentWord);
+    if(this.currentWord) {
+      console.log(this.currentWord);
+      this.setFormant();
+    }
   }
 }
