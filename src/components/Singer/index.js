@@ -30,10 +30,14 @@ class Word {
         syllablePhase = isVowel ? 2 : 1; // skip to phase 2 if no initial consonant
       } else {
         if(syllablePhase == 1 && isVowel) {
+          // go to phase 2 if no more initial consonants
           syllablePhase = 2;
         } else if(syllablePhase == 2 && !isVowel) {
+          // go to phase 3 if there is another consonant to go to
           syllablePhase = 3;
         } else if(syllablePhase != 1 && isVowel) {
+          // end of syllable if any vowel is found when you were in phase 3
+          // also, if in phase 2, end of syllable if second vowel found
           syllablePhase = 1;
           syllables.push(thisSyllablePhonemes);
           thisSyllablePhonemes = [];
