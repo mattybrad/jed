@@ -1,3 +1,53 @@
+import PronunciationTool from '../PronunciationTool';
+
+class Phoneme {
+  static isVowel(rawPhoneme) {
+    return "AEIOU".indexOf(rawPhoneme.charAt(0))>-1;
+  }
+}
+
+class Syllable {
+  constructor() {
+
+  }
+}
+
+class Word {
+  constructor(rawWord) {
+    this.rawPronunciation = PronunciationTool.getPronunciation(rawWord.toUpperCase());
+    console.log(Word.getSyllables(this.rawPronunciation));
+  }
+
+  static getSyllables(rawPronunciation) {
+    var rawPhonemes = rawPronunciation.split(" ");
+    var syllablePhase = 1; // 1 = initial consonant, 2 = vowel, 3 = end consonant
+    var isVowel;
+    var thisSyllablePhonemes = [];
+    var syllables = [];
+    for(var i = 0; i < rawPhonemes.length; i ++) {
+      isVowel = Phoneme.isVowel(rawPhonemes[i])
+      if(thisSyllablePhonemes.length == 0) {
+        syllablePhase = isVowel ? 2 : 1; // skip to phase 2 if no initial consonant
+      } else {
+        if(syllablePhase == 1 && isVowel) {
+          syllablePhase = 2;
+        } else if(syllablePhase == 2 && !isVowel) {
+          syllablePhase = 3;
+        } else if(syllablePhase != 1 && isVowel) {
+          syllablePhase = 1;
+          syllables.push(thisSyllablePhonemes);
+          thisSyllablePhonemes = [];
+        }
+      }
+      thisSyllablePhonemes.push(rawPhonemes[i]);
+      if(i == rawPhonemes.length - 1 && thisSyllablePhonemes.length) {
+        syllables.push(thisSyllablePhonemes);
+      }
+    }
+    return syllables;
+  }
+}
+
 export default class Singer {
   constructor() {
     this.wordQueue = [];
@@ -7,15 +57,14 @@ export default class Singer {
 
   addToWordQueue(words) {
     this.wordQueue = this.wordQueue.concat(words);
-    console.log(this.wordQueue);
   }
 
   nextWord() {
     if(this.wordQueue.length) {
-      this.currentWord = this.wordQueue.shift();
+      this.currentWord = new Word(this.wordQueue.shift());
     } else {
       this.currentWord = null;
     }
-    console.log(this.currentWord);
+    if(this.currentWord) console.log(this.currentWord);
   }
 }
