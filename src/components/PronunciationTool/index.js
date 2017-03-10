@@ -28,27 +28,31 @@ function parseLine(line) {
 
 export default class PronunciationTool {
   static init(forceReload, callback) {
-    localForage.getItem("A", function(err, res) {
-      if(!res || forceReload) {
-        loadDictionary(function(fileText) {
-          var d = fileText.split("\n");
-          var p;
-          var dicLength = d.length;
-          console.log(dicLength);
-          var wordsProcessed = 0;
-          for(var i = 0; i < dicLength; i ++) {
-            p = parseLine(d[i]);
-            if(p) localForage.setItem(p.word, p.pronunciation, function() {
-              wordsProcessed ++;
-              if(wordsProcessed == dicLength) callback();
-            });
-            else wordsProcessed ++;
-          }
-        })
-      } else {
-        callback();
-      }
-    })
+    var worker = new Worker("/assets/pronunciationWorker.js");
+    worker.onmessage = function(event){
+      console.log(event.data);
+    }
+    // localForage.getItem("A", function(err, res) {
+    //   if(!res || forceReload) {
+    //     loadDictionary(function(fileText) {
+    //       var d = fileText.split("\n");
+    //       var p;
+    //       var dicLength = d.length;
+    //       console.log(dicLength);
+    //       var wordsProcessed = 0;
+    //       for(var i = 0; i < dicLength; i ++) {
+    //         p = parseLine(d[i]);
+    //         if(p) localForage.setItem(p.word, p.pronunciation, function() {
+    //           wordsProcessed ++;
+    //           if(wordsProcessed == dicLength) callback();
+    //         });
+    //         else wordsProcessed ++;
+    //       }
+    //     })
+    //   } else {
+    //     callback();
+    //   }
+    // })
   }
 
   static getPronunciation() {
