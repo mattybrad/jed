@@ -12,6 +12,7 @@ export default class Home extends React.Component {
     }
     PronunciationTool.init(true, function() {
       console.log("DONE");
+      console.log(PronunciationTool.getPronunciation("HELLO"));
     });
   }
 
