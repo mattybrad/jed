@@ -56,6 +56,25 @@ export default class Singer {
   constructor() {
     this.wordQueue = [];
     this.currentWord = null;
+    var actx = new AudioContext();
+    var osc = actx.createOscillator();
+    var gain = actx.createGain();
+    var f1 = actx.createBiquadFilter();
+    var f2 = actx.createBiquadFilter();
+    var f1Gain = actx.createGain();
+    var f2Gain = actx.createGain();
+    osc.frequency.value = 130;
+    f1.frequency.value = f2.frequency.value = 10; // starting value
+    f1.Q.value = f2.Q.value = 10;
+    osc.connect(f1);
+    osc.connect(f2);
+    f1.connect(f1Gain);
+    f2.connect(f2Gain);
+    f1Gain.connect(gain);
+    f2Gain.connect(gain);
+    gain.connect(actx.destination);
+    gain.gain.value = 0.1;
+    osc.start();
     setInterval(this.nextWord.bind(this), 1000); // using an interval for now to simulate flow of words
   }
 
