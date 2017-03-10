@@ -63,6 +63,7 @@ export default class Singer {
     var f2 = actx.createBiquadFilter();
     var f1Gain = actx.createGain();
     var f2Gain = actx.createGain();
+    osc.type = "square";
     osc.frequency.value = 130;
     f1.frequency.value = f2.frequency.value = 10; // starting value
     f1.Q.value = f2.Q.value = 10;
@@ -75,7 +76,19 @@ export default class Singer {
     gain.connect(actx.destination);
     gain.gain.value = 0.1;
     osc.start();
+    this.oscillator = osc;
+    this.gain = gain;
+    this.filter1 = f1;
+    this.filter2 = f2;
+    this.filter1Gain = f1Gain;
+    this.filter2Gain = f2Gain;
+    this.setFormant();
     setInterval(this.nextWord.bind(this), 1000); // using an interval for now to simulate flow of words
+  }
+
+  setFormant() {
+    this.filter1.frequency.value = 250;
+    this.filter2.frequency.value = 595;
   }
 
   addToWordQueue(words) {
