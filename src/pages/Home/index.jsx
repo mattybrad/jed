@@ -1,12 +1,34 @@
 import React from 'react';
 import classNames from 'classnames';
+import styles from './index.css';
 
 export default class Home extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      rawWords: "these words are my own"
+    }
+  }
+
+  onTextChange(ev) {
+    this.setState({
+      rawWords: ev.target.value
+    })
+  }
+
+  onSubmit(ev) {
+    ev.preventDefault();
+  }
+
   render() {
     return(
-      <div>
-        <h1>hello world</h1>
+      <div className={classNames(styles.this)}>
+        <h1>testing</h1>
+        <form onSubmit={this.onSubmit.bind(this)}>
+          <textarea value={this.state.rawWords} onChange={this.onTextChange.bind(this)}/><br/>
+          <input type="submit" value="Load words"></input>
+        </form>
       </div>
     )
   }
