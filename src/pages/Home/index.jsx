@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './index.css';
+import PronunciationTool from '../../components/PronunciationTool';
 
 export default class Home extends React.Component {
 
@@ -9,6 +10,7 @@ export default class Home extends React.Component {
     this.state = {
       rawWords: "these words are my own"
     }
+    PronunciationTool.init();
   }
 
   onTextChange(ev) {
