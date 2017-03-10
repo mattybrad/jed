@@ -10,7 +10,9 @@ export default class Home extends React.Component {
     this.state = {
       rawWords: "these words are my own"
     }
-    PronunciationTool.init();
+    PronunciationTool.init(true, function() {
+      console.log("DONE");
+    });
   }
 
   onTextChange(ev) {
