@@ -9,7 +9,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rawWords: "these words are my own",
+      rawWords: "I am testing the system for syllables",
       pronunciationToolReady: false
     }
     this.singer = new Singer();

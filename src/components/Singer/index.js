@@ -1,10 +1,18 @@
 import FourierCoefficients from './FourierCoefficients';
 import Word from './Word';
+import Syllable from './Syllable';
 
 export default class Singer {
   constructor() {
+    setTimeout(function(){
+      var test = new Word("syllables");
+      console.log(Word.getSyllables(test.rawPronunciation));
+    }.bind(this),2000);
     this.wordQueue = [];
     this.currentWord = null;
+    this.syllableQueue = [];
+    this.currentSyllable = null;
+    this.syllableProgress = 0;
     var actx = new AudioContext();
     var osc = actx.createOscillator();
     var gain = actx.createGain();
@@ -41,7 +49,7 @@ export default class Singer {
     this.filter1Gain = f1Gain;
     this.filter2Gain = f2Gain;
     this.setFormant();
-    setInterval(this.nextWord.bind(this), 1000); // using an interval for now to simulate flow of words
+    setInterval(this.nextSyllable.bind(this), 1000); // using an interval for now to simulate flow of words
   }
 
   setFormant() {
@@ -66,12 +74,24 @@ export default class Singer {
   nextWord() {
     if(this.wordQueue.length) {
       this.currentWord = new Word(this.wordQueue.shift());
+      this.syllableQueue = Word.getSyllables(this.currentWord.rawPronunciation);
     } else {
       this.currentWord = null;
     }
-    if(this.currentWord) {
-      console.log(this.currentWord);
-      this.setFormant();
+  }
+
+  nextSyllable() {
+    if(this.syllableQueue.length) {
+      this.currentSyllable = new Syllable(this.syllableQueue.shift());
+      console.log(this.currentSyllable.rawSyllable);
+    } else {
+      this.nextWord();
+      if(this.currentWord) this.nextSyllable();
+      else this.currentSyllable = null;
     }
+  }
+
+  update() {
+
   }
 }

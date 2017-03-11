@@ -1,5 +1,5 @@
 export default class Syllable {
-  constructor() {
-
+  constructor(rawSyllable) {
+    this.rawSyllable = rawSyllable;
   }
 }

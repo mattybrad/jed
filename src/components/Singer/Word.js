@@ -5,7 +5,6 @@ import Phoneme from './Phoneme';
 export default class Word {
   constructor(rawWord) {
     this.rawPronunciation = PronunciationTool.getPronunciation(rawWord.toUpperCase());
-    console.log(Word.getSyllables(this.rawPronunciation));
   }
 
   static getSyllables(rawPronunciation) {
@@ -15,7 +14,7 @@ export default class Word {
     var thisSyllablePhonemes = [];
     var syllables = [];
     for(var i = 0; i < rawPhonemes.length; i ++) {
-      isVowel = Phoneme.isVowel(rawPhonemes[i])
+      isVowel = Phoneme.isVowel(rawPhonemes[i]);
       if(thisSyllablePhonemes.length == 0) {
         syllablePhase = isVowel ? 2 : 1; // skip to phase 2 if no initial consonant
       } else {
@@ -28,7 +27,7 @@ export default class Word {
         } else if(syllablePhase != 1 && isVowel) {
           // end of syllable if any vowel is found when you were in phase 3
           // also, if in phase 2, end of syllable if second vowel found
-          syllablePhase = 1;
+          syllablePhase = isVowel ? 2 : 1; // skip to phase 2 if no initial consonant
           syllables.push(thisSyllablePhonemes);
           thisSyllablePhonemes = [];
         }
