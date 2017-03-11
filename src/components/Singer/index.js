@@ -4,10 +4,6 @@ import Syllable from './Syllable';
 
 export default class Singer {
   constructor() {
-    setTimeout(function(){
-      var test = new Word("syllables");
-      console.log(Word.getSyllables(test.rawPronunciation));
-    }.bind(this),2000);
     this.wordQueue = [];
     this.currentWord = null;
     this.syllableQueue = [];
@@ -49,7 +45,7 @@ export default class Singer {
     this.filter1Gain = f1Gain;
     this.filter2Gain = f2Gain;
     this.setFormant();
-    setInterval(this.nextSyllable.bind(this), 1000); // using an interval for now to simulate flow of words
+    //setInterval(this.nextSyllable.bind(this), 1000); // using an interval for now to simulate flow of words
   }
 
   setFormant() {
@@ -69,6 +65,7 @@ export default class Singer {
 
   addToWordQueue(words) {
     this.wordQueue = this.wordQueue.concat(words);
+    this.nextSyllable(); // temp
   }
 
   nextWord() {
