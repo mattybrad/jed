@@ -45,7 +45,7 @@ export default class Singer {
     this.filter1Gain = f1Gain;
     this.filter2Gain = f2Gain;
     this.setFormant();
-    //setInterval(this.nextSyllable.bind(this), 1000); // using an interval for now to simulate flow of words
+    setInterval(this.update.bind(this), 1000); // using an interval for now to simulate flow of words
   }
 
   setFormant() {
@@ -89,6 +89,8 @@ export default class Singer {
   }
 
   update() {
-
+    if(this.currentSyllable) {
+      console.log(this.currentSyllable.getFormantValues(this.syllableProgress));
+    }
   }
 }

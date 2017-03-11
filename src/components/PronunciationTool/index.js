@@ -1,5 +1,3 @@
-import * as localForage from "localforage";
-
 var pronunciations = {};
 
 export default class PronunciationTool {
@@ -16,5 +14,19 @@ export default class PronunciationTool {
 
   static getPronunciation(word) {
     return pronunciations[word];
+  }
+
+  static getVowelSequence(baseVowel) {
+    var dipthongs = {
+      "AW": ["AE","UW"],
+      "AY": ["AA","IY"],
+      "ER": ["AH","UH"],
+      "EY": ["EH","IY"],
+      "OW": ["AH","UW"],
+      "OY": ["AO","IY"],
+    }
+    return (
+      dipthongs.hasOwnProperty(baseVowel) ? dipthongs[baseVowel] : [baseVowel]
+    )
   }
 }
