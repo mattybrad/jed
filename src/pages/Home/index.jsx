@@ -9,7 +9,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rawWords: "this is testing this is test test this it is",
+      rawWords: "axe edge it ox up",
       sliderValue: 0,
       syllableProgress: 0,
       sliderDirectionPositive: true,

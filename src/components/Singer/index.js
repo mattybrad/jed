@@ -31,12 +31,12 @@ export default class Singer {
     osc.connect(f1);
     osc.connect(f2);
     // osc.connect(gain);
-    //f1.connect(f1Gain);
+    f1.connect(f1Gain);
     f2.connect(f2Gain);
     f1Gain.connect(gain);
     f2Gain.connect(gain);
     gain.connect(actx.destination);
-    gain.gain.value = 0.1;
+    gain.gain.value = 0.5;
     osc.start();
     this.oscillator = osc;
     this.gain = gain;
@@ -81,6 +81,7 @@ export default class Singer {
     if(this.syllableQueue.length) {
       this.currentSyllable = new Syllable(this.syllableQueue.shift());
       console.log(this.currentSyllable.rawSyllable);
+      console.log(this.currentSyllable.getFormantValues(this.syllableProgress));
     } else {
       this.nextWord();
       if(this.currentWord) this.nextSyllable();
