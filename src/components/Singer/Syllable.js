@@ -10,13 +10,12 @@ export default class Syllable {
   constructor(rawSyllable) {
     this.rawSyllable = rawSyllable;
     this.vowelSequence = [];
-    console.log(rawSyllable);
 
     // find vowel
     var rawPhonemes = rawSyllable;
     var vowel = null;
     for(var i = 0; i < rawPhonemes.length; i ++) {
-      if(Phoneme.isVowel(rawPhonemes[i])) vowel = rawPhonemes[i];
+      if(Phoneme.isVowel(rawPhonemes[i])) vowel = rawPhonemes[i].replace(/[0-9]/g, "");
     }
     if(vowel) this.vowelSequence = PronunciationTool.getVowelSequence(vowel);
   }
@@ -40,7 +39,6 @@ export default class Syllable {
       var adjustedsyllableProgress = syllableProgress;
       var f1 = Formants[v1];
       var f2 = Formants[v2];
-      console.log(f1,f2);
       var out = [];
       for(var i = 0; i < 2; i ++) {
         out[i] = {

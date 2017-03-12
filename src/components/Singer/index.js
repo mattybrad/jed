@@ -44,15 +44,15 @@ export default class Singer {
     this.filter2 = f2;
     this.filter1Gain = f1Gain;
     this.filter2Gain = f2Gain;
-    this.setFormant();
-    setInterval(this.update.bind(this), 1000); // using an interval for now to simulate flow of words
+    this.setFormant(10, 10);
+    setInterval(this.update.bind(this), 20); // using an interval for now to simulate flow of words
   }
 
-  setFormant() {
-    this.filter1.frequency.value = 250 + Math.random()*500;
+  setFormant(freq1, freq2) {
+    this.filter1.frequency.value = freq1;
     this.filter1.Q.value = 10;
     this.filter1Gain.gain.value = 1;
-    this.filter2.frequency.value = 595 + Math.random()*2000;
+    this.filter2.frequency.value = freq2;
     this.filter2.Q.value = 10;
     this.filter2Gain.gain.value = 1;
     // this.filter1.frequency.value = 240;
@@ -90,7 +90,8 @@ export default class Singer {
 
   update() {
     if(this.currentSyllable) {
-      console.log(this.currentSyllable.getFormantValues(this.syllableProgress));
+      var currentFormant = this.currentSyllable.getFormantValues(this.syllableProgress);
+      this.setFormant(currentFormant[0].frequency, currentFormant[1].frequency);
     }
   }
 }
