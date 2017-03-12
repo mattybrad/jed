@@ -9,7 +9,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rawWords: "axe edge it ox up",
+      rawWords: "aim seem ice oak youth aim seem ice oak youth aim seem ice oak youth aim seem ice oak youth",
       sliderValue: 0,
       syllableProgress: 0,
       sliderDirectionPositive: true,
