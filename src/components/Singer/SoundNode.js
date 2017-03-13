@@ -11,10 +11,16 @@ export default class SoundNode {
   trigger() {
     if(this.type == "wavetable") {
       this.triggered = true;
+      var bufferSource = actx.createBufferSource();
+      bufferSource.buffer = buffers[this.sound];
+      bufferSource.connect(actx.destination);
+      bufferSource.start();
     }
   }
 
   static init(actx, callback) {
+    var allWavetables = ["T"]; // all files to load
+
     buffers["T"] = null;
 
     function loadSound(url) {
@@ -26,10 +32,10 @@ export default class SoundNode {
         actx.decodeAudioData(req.response, function(buffer) {
           buffers["T"] = buffer;
           // temp
-          var bufferSource = actx.createBufferSource();
-          bufferSource.buffer = buffers["T"];
-          bufferSource.connect(actx.destination);
-          bufferSource.start();
+          // var bufferSource = actx.createBufferSource();
+          // bufferSource.buffer = buffers["T"];
+          // bufferSource.connect(actx.destination);
+          // bufferSource.start();
           callback();
         }, function(){
           console.log("ERROR");

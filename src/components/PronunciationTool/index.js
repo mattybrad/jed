@@ -26,7 +26,7 @@ export default class PronunciationTool {
       "OY": ["AO","IY"],
     }
     return (
-      dipthongs.hasOwnProperty(baseVowel) ? dipthongs[baseVowel] : [baseVowel]
+      dipthongs.hasOwnProperty(baseVowel) ? dipthongs[baseVowel] : [baseVowel, baseVowel]
     )
   }
 }
