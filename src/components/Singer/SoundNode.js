@@ -21,6 +21,8 @@ export default class SoundNode {
 
   static init(actx, callback) {
     SoundNode.actx = actx;
+    SoundNode.gainNode = actx.createGain();
+    SoundNode.gainNode.gain.value = 0.1;
     var allWavetables = ["T"]; // all files to load
 
     buffers["T"] = null;

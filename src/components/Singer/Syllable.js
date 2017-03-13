@@ -1,5 +1,5 @@
 import Phoneme from './Phoneme';
-import PronunciationTool from '../PronunciationTool';
+import PronunciationTool from './PronunciationTool';
 import Formants from './Formants';
 import SoundNode from './SoundNode';
 
@@ -14,7 +14,6 @@ export default class Syllable {
       this.sounds[i] = sounds[i].replace(/[0-9]/g, "")
     }
     this.placeNodes();
-    console.log(this.nodes);
   }
 
   placeNodes() {

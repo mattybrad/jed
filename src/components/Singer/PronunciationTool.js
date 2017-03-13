@@ -1,7 +1,7 @@
 var pronunciations = {};
 
 export default class PronunciationTool {
-  static init(forceReload, callback) {
+  static init(callback) {
     var worker = new Worker("/assets/pronunciationWorker.js");
     worker.onmessage = function(event){
       if(event.data.status == "done") {

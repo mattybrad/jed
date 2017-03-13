@@ -1,9 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './index.css';
-import PronunciationTool from '../../components/PronunciationTool';
 import Singer from '../../components/Singer';
-import SoundNode from '../../components/Singer/SoundNode';
 
 export default class Home extends React.Component {
 
@@ -15,20 +13,16 @@ export default class Home extends React.Component {
       sliderValue: 0,
       syllableProgress: 0,
       sliderDirectionPositive: true,
-      pronunciationToolReady: false,
-      soundNodesReady: false,
+      singerReady: false,
     }
     this.singer = new Singer();
-    PronunciationTool.init(true, function() {
-      this.setState({
-        pronunciationToolReady: true
-      })
-    }.bind(this));
-    SoundNode.init(this.actx, function() {
-      this.setState({
-        soundNodesReady: true
-      })
-    }.bind(this));
+    this.singer.init(this.onSingerReady.bind(this));
+  }
+
+  onSingerReady() {
+    this.setState({
+      singerReady: true
+    })
   }
 
   onTextChange(ev) {
@@ -67,7 +61,7 @@ export default class Home extends React.Component {
   render() {
     return(
       <div className={classNames(styles.this)}>
-        {this.state.pronunciationToolReady && this.state.soundNodesReady ?
+        {this.state.singerReady ?
           <div>
             <h1>testing</h1>
             <form onSubmit={this.onSubmit.bind(this)}>

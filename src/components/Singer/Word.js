@@ -1,4 +1,4 @@
-import PronunciationTool from '../PronunciationTool';
+import PronunciationTool from './PronunciationTool';
 import Syllable from './Syllable';
 import Phoneme from './Phoneme';
 
