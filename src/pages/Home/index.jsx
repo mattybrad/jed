@@ -3,22 +3,30 @@ import classNames from 'classnames';
 import styles from './index.css';
 import PronunciationTool from '../../components/PronunciationTool';
 import Singer from '../../components/Singer';
+import SoundNode from '../../components/Singer/SoundNode';
 
 export default class Home extends React.Component {
 
   constructor(props) {
     super(props);
+    this.actx = new AudioContext();
     this.state = {
-      rawWords: "aim seem ice oak youth aim seem ice oak youth aim seem ice oak youth aim seem ice oak youth",
+      rawWords: "too too too too too too too",
       sliderValue: 0,
       syllableProgress: 0,
       sliderDirectionPositive: true,
-      pronunciationToolReady: false
+      pronunciationToolReady: false,
+      soundNodesReady: false,
     }
     this.singer = new Singer();
     PronunciationTool.init(true, function() {
       this.setState({
         pronunciationToolReady: true
+      })
+    }.bind(this));
+    SoundNode.init(this.actx, function() {
+      this.setState({
+        soundNodesReady: true
       })
     }.bind(this));
   }
@@ -59,7 +67,7 @@ export default class Home extends React.Component {
   render() {
     return(
       <div className={classNames(styles.this)}>
-        {this.state.pronunciationToolReady ?
+        {this.state.pronunciationToolReady && this.state.soundNodesReady ?
           <div>
             <h1>testing</h1>
             <form onSubmit={this.onSubmit.bind(this)}>
