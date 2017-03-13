@@ -1,23 +1,35 @@
 import Phoneme from './Phoneme';
 import PronunciationTool from '../PronunciationTool';
 import Formants from './Formants';
+import SoundNode from './SoundNode';
 
 function lerp(a, b, f) {
   return a + f * (b - a);
 }
 
 export default class Syllable {
-  constructor(rawSyllable) {
-    this.rawSyllable = rawSyllable;
-    this.vowelSequence = [];
-
-    // find vowel
-    var rawPhonemes = rawSyllable;
-    var vowel = null;
-    for(var i = 0; i < rawPhonemes.length; i ++) {
-      if(Phoneme.isVowel(rawPhonemes[i])) vowel = rawPhonemes[i].replace(/[0-9]/g, "");
+  constructor(sounds) {
+    this.sounds = [];
+    for(var i = 0; i < sounds.length; i ++) {
+      this.sounds[i] = sounds[i].replace(/[0-9]/g, "")
     }
-    if(vowel) this.vowelSequence = PronunciationTool.getVowelSequence(vowel);
+    this.placeNodes();
+    console.log(this.nodes);
+  }
+
+  placeNodes() {
+    var nodes = [];
+    for(var i = 0; i < this.sounds.length; i ++) {
+      if(Phoneme.isVowel(this.sounds[i])) {
+        var vowelSequence = PronunciationTool.getVowelSequence(this.sounds[i]);
+        vowelSequence.forEach(function(vowel){
+          nodes.push(new SoundNode("formant", vowel));
+        })
+      } else {
+        nodes.push(new SoundNode("wavetable", this.sounds[i]));
+      }
+    }
+    this.nodes = nodes;
   }
 
   getFormantValues(syllableProgress) {
