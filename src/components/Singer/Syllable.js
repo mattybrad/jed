@@ -26,13 +26,13 @@ export default class Syllable {
         var vowelSequence = PronunciationTool.getVowelSequence(this.sounds[i]);
         vowelSequence.forEach(function(vowel){
           n = new SoundNode("formant", vowel);
-          n.position = vowelFoundYet ? 0 : 1;
+          n.position = vowelFoundYet ? 1 : 0;
           nodes.push(n);
           vowelFoundYet = true;
         })
       } else {
         n = new SoundNode("wavetable", this.sounds[i]);
-        n.position = vowelFoundYet ? 0 : 1;
+        n.position = vowelFoundYet ? 1 : 0;
         nodes.push(n);
       }
     }
@@ -58,7 +58,7 @@ export default class Syllable {
       var out = [];
       for(var i = 0; i < 2; i ++) {
         out[i] = {
-          frequency: lerp(f1[i], f2[i], 1 - adjustedPosition),
+          frequency: lerp(f1[i], f2[i], adjustedPosition),
           gain: 1
         }
       }
@@ -68,33 +68,12 @@ export default class Syllable {
     }
   }
 
-  // getFormantValues(syllableProgress) {
-  //   var v = this.vowelSequence;
-  //   if(v.length == 0) return null;
-  //   else {
-  //     var v1, v2;
-  //     if(v.length == 1) {
-  //       v1 = v2 = v[0];
-  //     } else {
-  //       for(var i = 0; i < v.length - 1; i ++) {
-  //         if(syllableProgress >= 0) {
-  //           v1 = v[i];
-  //           v2 = v[i+1];
-  //         }
-  //       }
-  //     }
-  //     var positionDelta = 1;
-  //     var adjustedsyllableProgress = syllableProgress;
-  //     var f1 = Formants[v1];
-  //     var f2 = Formants[v2];
-  //     var out = [];
-  //     for(var i = 0; i < 2; i ++) {
-  //       out[i] = {
-  //         frequency: lerp(f1[i], f2[i], adjustedsyllableProgress),
-  //         gain: 1
-  //       }
-  //     }
-  //     return out;
-  //   }
-  // }
+  triggerWavetables(position) {
+    var n = this.nodes;
+    for(var i = 0; i < n.length; i ++) {
+      if(n[i].type == "wavetable" && !n[i].triggered && position >= n[i].position) {
+        n[i].trigger();
+      }
+    }
+  }
 }

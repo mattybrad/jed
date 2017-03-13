@@ -11,14 +11,16 @@ export default class SoundNode {
   trigger() {
     if(this.type == "wavetable") {
       this.triggered = true;
-      var bufferSource = actx.createBufferSource();
+      var bufferSource = SoundNode.actx.createBufferSource();
       bufferSource.buffer = buffers[this.sound];
-      bufferSource.connect(actx.destination);
+      bufferSource.connect(SoundNode.actx.destination);
       bufferSource.start();
+      console.log(this.sound);
     }
   }
 
   static init(actx, callback) {
+    SoundNode.actx = actx;
     var allWavetables = ["T"]; // all files to load
 
     buffers["T"] = null;

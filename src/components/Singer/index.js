@@ -92,6 +92,7 @@ export default class Singer {
     if(this.currentSyllable) {
       var currentFormant = this.currentSyllable.getFormantValues(this.syllableProgress);
       this.setFormant(currentFormant[0].frequency, currentFormant[1].frequency);
+      this.currentSyllable.triggerWavetables(this.syllableProgress);
     }
   }
 }

@@ -11,7 +11,7 @@ export default class Home extends React.Component {
     super(props);
     this.actx = new AudioContext();
     this.state = {
-      rawWords: "sail to the moon",
+      rawWords: "too too too too too too too too too",
       sliderValue: 0,
       syllableProgress: 0,
       sliderDirectionPositive: true,
