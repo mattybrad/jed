@@ -54,8 +54,8 @@ export default class Singer {
       //this.setFormant(currentFormant[0].frequency, currentFormant[1].frequency);
       //this.currentSyllable.triggerWavetables(this.syllableProgress);
       this.vocalSynth.vocalTractModel.setFormant(0, currentFormant[0].frequency, 10, 1);
-      this.vocalSynth.vocalTractModel.setFormant(1, currentFormant[1].frequency, 10, 0.5);
-      this.vocalSynth.vocalTractModel.setFormant(2, 0, 10, 0);
+      this.vocalSynth.vocalTractModel.setFormant(1, currentFormant[1].frequency, 10, 0.6);
+      this.vocalSynth.vocalTractModel.setFormant(2, currentFormant[2].frequency, 10, 0.3);
     }
   }
 }

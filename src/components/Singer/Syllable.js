@@ -55,7 +55,7 @@ export default class Syllable {
       var f1 = Formants[prev.sound];
       var f2 = Formants[next.sound];
       var out = [];
-      for(var i = 0; i < 2; i ++) {
+      for(var i = 0; i < 3; i ++) {
         out[i] = {
           frequency: lerp(f1[i], f2[i], adjustedPosition),
           gain: 1
