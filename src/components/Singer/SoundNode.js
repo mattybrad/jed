@@ -13,7 +13,8 @@ export default class SoundNode {
       this.triggered = true;
       var bufferSource = SoundNode.actx.createBufferSource();
       bufferSource.buffer = buffers[this.sound];
-      bufferSource.connect(SoundNode.actx.destination);
+      bufferSource.connect(SoundNode.filterNode);
+      bufferSource.connect(SoundNode.rawNode);
       bufferSource.start();
       console.log(this.sound);
     }
@@ -21,8 +22,10 @@ export default class SoundNode {
 
   static init(actx, callback) {
     SoundNode.actx = actx;
-    SoundNode.gainNode = actx.createGain();
-    SoundNode.gainNode.gain.value = 0.1;
+    SoundNode.filterNode = actx.createGain();
+    SoundNode.rawNode = actx.createGain();
+    SoundNode.filterNode.gain.value = 10;
+    SoundNode.rawNode.gain.value = 0.03;
     var allWavetables = ["T"]; // all files to load
 
     buffers["T"] = null;

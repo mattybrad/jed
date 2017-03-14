@@ -45,6 +45,9 @@ export default class Singer {
         rawGain.connect(gain);
         f1Gain.connect(gain);
         f2Gain.connect(gain);
+        SoundNode.filterNode.connect(f1);
+        SoundNode.filterNode.connect(f2);
+        SoundNode.rawNode.connect(gain);
         gain.connect(actx.destination);
         rawGain.gain.value = 0.01;
         gain.gain.value = 0.5;
