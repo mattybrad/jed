@@ -9,7 +9,7 @@ export default class Home extends React.Component {
     super(props);
     this.actx = new AudioContext();
     this.state = {
-      rawWords: "too too too too too too too too too",
+      rawWords: "aim eat eye owe you",
       sliderValue: 0,
       syllableProgress: 0,
       sliderDirectionPositive: true,
