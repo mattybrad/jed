@@ -1,12 +1,12 @@
-import FourierCoefficients from './FourierCoefficients';
 import PronunciationTool from './PronunciationTool';
 import Word from './Word';
 import Syllable from './Syllable';
 import SoundNode from './SoundNode';
+import VocalSynth from './VocalSynth';
 
 export default class Singer {
   constructor() {
-
+    var vs = new VocalSynth();
   }
 
   init(callback) {
@@ -48,7 +48,7 @@ export default class Singer {
         SoundNode.filterNode.connect(f1);
         SoundNode.filterNode.connect(f2);
         SoundNode.rawNode.connect(gain);
-        gain.connect(actx.destination);
+        //gain.connect(actx.destination);
         rawGain.gain.value = 0.01;
         gain.gain.value = 0.5;
         osc.start();
@@ -59,7 +59,7 @@ export default class Singer {
         this.filter1Gain = f1Gain;
         this.filter2Gain = f2Gain;
         this.setFormant(10, 10);
-        setInterval(this.update.bind(this), 20);
+        //setInterval(this.update.bind(this), 20);
         callback();
       }.bind(this))
     }.bind(this));
