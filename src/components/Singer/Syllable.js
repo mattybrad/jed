@@ -21,20 +21,28 @@ export default class Syllable {
     var n;
     var vowelFoundYet = false;
     for(var i = 0; i < this.sounds.length; i ++) {
-      if(Phoneme.isVowel(this.sounds[i])) {
-        var vowelSequence = PronunciationTool.getVowelSequence(this.sounds[i]);
-        vowelSequence.forEach(function(vowel){
-          n = new SoundNode("formant", vowel);
-          n.position = vowelFoundYet ? 1 : 0;
-          nodes.push(n);
-          vowelFoundYet = true;
-        })
-      } else {
-        n = new SoundNode("wavetable", this.sounds[i]);
-        n.position = vowelFoundYet ? 1 : 0;
-        nodes.push(n);
+      // if(Phoneme.isVowel(this.sounds[i])) {
+      //   var vowelSequence = PronunciationTool.getVowelSequence(this.sounds[i]);
+      //   vowelSequence.forEach(function(vowel){
+      //     n = new SoundNode("formant", vowel);
+      //     n.position = vowelFoundYet ? 1 : 0;
+      //     nodes.push(n);
+      //     vowelFoundYet = true;
+      //   })
+      // } else {
+      //   n = new SoundNode("wavetable", this.sounds[i]);
+      //   n.position = vowelFoundYet ? 1 : 0;
+      //   nodes.push(n);
+      // }
+      n = Phoneme.getEvents(this.sounds[i]);
+      if(n) {
+        nodes = nodes.concat(n);
       }
     }
+
+    nodes.forEach(function(n, i){
+      n.position = i / (nodes.length - 1);
+    })
 
     this.nodes = nodes;
   }
@@ -43,21 +51,19 @@ export default class Syllable {
     var n = this.nodes;
     var prev = null;
     var next = null;
-    for(var i = 0; i < n.length; i ++) {
-      if(n[i].type == "formant") {
-        if(position >= n[i].position) prev = n[i];
-        if(position < n[i].position) next = n[i];
-      }
+    for(var i = 0; i < n.length && !next; i ++) {
+      if(position >= n[i].position) prev = n[i];
+      if(position < n[i].position) next = n[i];
     }
     if(prev&&next) {
       // if two formants are defined, return a lerped mix of the two
-      var adjustedPosition = position; // temp
-      var f1 = Formants[prev.sound];
-      var f2 = Formants[next.sound];
+      var positionDelta = next.position - prev.position;
+      var adjustedPosition = (position - prev.position) / positionDelta;
+      console.log(prev.position, next.position);
       var out = [];
       for(var i = 0; i < 3; i ++) {
         out[i] = {
-          frequency: lerp(f1[i], f2[i], adjustedPosition),
+          frequency: lerp(prev.formants[i], next.formants[i], adjustedPosition),
           gain: 1
         }
       }
