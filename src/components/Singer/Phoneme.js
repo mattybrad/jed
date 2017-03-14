@@ -46,6 +46,17 @@ export default class Phoneme {
       ]
       break;
 
+      case "IY":
+      out = [
+        {
+          formants: FORMANTS["IY"]
+        },
+        {
+          formants: FORMANTS["IY"]
+        }
+      ]
+      break;
+
       case "EY":
       out = [
         {
@@ -61,10 +72,14 @@ export default class Phoneme {
       out = [
         {
           formants: FORMANTS["IY"]
-        },
+        }
+      ]
+      break;
 
+      case "W":
+      out = [
         {
-          formants: FORMANTS["AE"]
+          formants: FORMANTS["UW"]
         }
       ]
       break;
