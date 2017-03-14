@@ -21,5 +21,8 @@ export default class VocalModel {
     this.vocalTractModel.connect(this.lipModel.input);
     this.lipModel.connect(this.masterGain);
     this.masterGain.connect(actx.destination);
+
+    this.pulseTrain.start();
+    this.noiseGenerator.start();
   }
 }

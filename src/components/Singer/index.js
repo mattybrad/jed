@@ -1,3 +1,4 @@
+import FourierCoefficients from './VocalSynth/FourierCoefficients';
 import PronunciationTool from './PronunciationTool';
 import Word from './Word';
 import Syllable from './Syllable';

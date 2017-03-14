@@ -10,11 +10,15 @@ export default class PulseTrain {
       real[i] = coeffs[2*i];
       imag[i] = coeffs[2*i+1];
     }
-    osc.setPeriodicWave(actx.createPeriodicWave(real,imag));
-    osc.frequency.value = 130;
+    this.osc.setPeriodicWave(actx.createPeriodicWave(real,imag));
+    this.osc.frequency.value = 130;
+  }
+
+  start() {
+    this.osc.start();
   }
 
   connect(output) {
-    this.oscillator.connect(output);
+    this.osc.connect(output);
   }
 }
