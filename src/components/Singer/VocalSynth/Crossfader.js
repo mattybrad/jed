@@ -1,5 +1,6 @@
 export default class Crossfader {
   constructor(actx) {
+    this.actx = actx;
     this.firstInput = actx.createGain();
     this.secondInput = actx.createGain();
     this.setFader(0);

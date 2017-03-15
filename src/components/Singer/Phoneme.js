@@ -34,6 +34,17 @@ export default class Phoneme {
   static getEvents(phoneme) {
     var out = null;
 
+    if(FORMANTS.hasOwnProperty(phoneme)) {
+      return [
+        {
+          formants: FORMANTS[phoneme]
+        },
+        {
+          formants: FORMANTS[phoneme]
+        }
+      ]
+    }
+
     switch(phoneme) {
       case "EH":
       out = [
@@ -64,6 +75,17 @@ export default class Phoneme {
         },
         {
           formants: FORMANTS["IY"]
+        }
+      ]
+      break;
+
+      case "HH":
+      out = [
+        {
+          tractOpen: false
+        },
+        {
+          tractOpen: false
         }
       ]
       break;

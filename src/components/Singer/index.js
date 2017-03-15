@@ -17,6 +17,11 @@ export default class Singer {
       this.currentWord = null;
       this.syllableQueue = [];
       this.currentSyllable = null;
+      this.currentFormant = [
+        {frequency: 599, gain: 1},
+        {frequency: 891, gain: 1},
+        {frequency: 2605, gain: 1},
+      ];
       this.syllableProgress = 0;
       setInterval(this.update.bind(this), 20);
       callback();
@@ -49,14 +54,12 @@ export default class Singer {
 
   update() {
     if(this.currentSyllable) {
-      var currentFormant = this.currentSyllable.getFormantValues(this.syllableProgress);
+      this.currentFormant = this.currentSyllable.getFormantValues(this.syllableProgress) || this.currentFormant;
       var isOpen = this.currentSyllable.getTractStatus(this.syllableProgress);
       this.vocalSynth.crossfader.setFader(isOpen ? 0 : 1);
-      if(currentFormant) {
-        this.vocalSynth.vocalTractModel.setFormant(0, currentFormant[0].frequency, 10, 1);
-        this.vocalSynth.vocalTractModel.setFormant(1, currentFormant[1].frequency, 10, 0.6);
-        this.vocalSynth.vocalTractModel.setFormant(2, currentFormant[2].frequency, 10, 0.3);
-      }
+      this.vocalSynth.vocalTractModel.setFormant(0, this.currentFormant[0].frequency, 10, 1);
+      this.vocalSynth.vocalTractModel.setFormant(1, this.currentFormant[1].frequency, 10, 0.6);
+      this.vocalSynth.vocalTractModel.setFormant(2, this.currentFormant[2].frequency, 10, 0.3);
     }
   }
 }

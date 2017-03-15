@@ -1,6 +1,10 @@
 export default class NoiseGenerator {
   constructor(actx) {
     this.noiseSource = actx.createBufferSource();
+    this.filter = actx.createBiquadFilter();
+    this.filter.type = "lowpass";
+    this.filter.frequency.value = 5000;
+    this.noiseSource.connect(this.filter);
 
     var bufferSize = 100 * 4096; // 100 is pretty arbitrary right now
     var buffer = actx.createBuffer(1, bufferSize, actx.sampleRate);
@@ -17,6 +21,6 @@ export default class NoiseGenerator {
   }
 
   connect(output) {
-    this.noiseSource.connect(output);
+    this.filter.connect(output);
   }
 }
