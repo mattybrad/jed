@@ -68,6 +68,17 @@ export default class Phoneme {
       ]
       break;
 
+      case "S":
+      out = [
+        {
+          tractOpen: false
+        },
+        {
+          tractOpen: false
+        }
+      ]
+      break;
+
       case "Y":
       out = [
         {

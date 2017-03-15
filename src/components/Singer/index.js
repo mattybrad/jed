@@ -40,7 +40,6 @@ export default class Singer {
   nextSyllable() {
     if(this.syllableQueue.length) {
       this.currentSyllable = new Syllable(this.syllableQueue.shift());
-      console.log(this.currentSyllable.getFormantValues(this.syllableProgress));
     } else {
       this.nextWord();
       if(this.currentWord) this.nextSyllable();
@@ -51,9 +50,13 @@ export default class Singer {
   update() {
     if(this.currentSyllable) {
       var currentFormant = this.currentSyllable.getFormantValues(this.syllableProgress);
-      this.vocalSynth.vocalTractModel.setFormant(0, currentFormant[0].frequency, 10, 1);
-      this.vocalSynth.vocalTractModel.setFormant(1, currentFormant[1].frequency, 10, 0.6);
-      this.vocalSynth.vocalTractModel.setFormant(2, currentFormant[2].frequency, 10, 0.3);
+      var isOpen = this.currentSyllable.getTractStatus(this.syllableProgress);
+      this.vocalSynth.crossfader.setFader(isOpen ? 0 : 1);
+      if(currentFormant) {
+        this.vocalSynth.vocalTractModel.setFormant(0, currentFormant[0].frequency, 10, 1);
+        this.vocalSynth.vocalTractModel.setFormant(1, currentFormant[1].frequency, 10, 0.6);
+        this.vocalSynth.vocalTractModel.setFormant(2, currentFormant[2].frequency, 10, 0.3);
+      }
     }
   }
 }
