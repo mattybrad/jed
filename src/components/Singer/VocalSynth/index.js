@@ -13,6 +13,8 @@ export default class VocalModel {
     this.noiseGenerator = new NoiseGenerator(actx);
     this.crossfader = new Crossfader(actx);
     this.vocalTractModel = new VocalTractModel(actx);
+    this.constrictionNoise = new NoiseGenerator(actx);
+    this.constrictionFader = new Crossfader(actx);
     this.constrictionModel = new FilterBank(actx);
     this.lipModel = new LipModel(actx);
     this.masterGain = actx.createGain();
@@ -30,8 +32,11 @@ export default class VocalModel {
     this.pulseTrain.connect(this.crossfader.firstInput);
     this.noiseGenerator.connect(this.crossfader.secondInput);
     this.crossfader.connect(this.vocalTractModel.input);
-    this.vocalTractModel.connect(this.constrictionModel.input);
-    this.constrictionModel.connect(this.lipModel.input);
+    this.constrictionNoise.connect(this.constrictionModel.input);
+    this.vocalTractModel.connect(this.constrictionModel.input.gain);
+    this.vocalTractModel.connect(this.constrictionFader.firstInput);
+    this.constrictionModel.connect(this.constrictionFader.secondInput);
+    this.constrictionFader.connect(this.lipModel.input);
     this.lipModel.connect(this.masterGain);
     this.masterGain.connect(actx.destination);
 
