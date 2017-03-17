@@ -10,10 +10,10 @@ export default class VocalModel {
     var actx = new AudioContext();
 
     this.pulseTrain = new PulseTrain(actx);
-    this.noiseGenerator = new NoiseGenerator(actx);
+    this.noiseGenerator = new NoiseGenerator(actx, 5000);
     this.crossfader = new Crossfader(actx);
     this.vocalTractModel = new VocalTractModel(actx);
-    this.constrictionNoise = new NoiseGenerator(actx);
+    this.constrictionNoise = new NoiseGenerator(actx, 20000);
     this.constrictionFader = new Crossfader(actx);
     this.constrictionModel = new FilterBank(actx);
     this.lipModel = new LipModel(actx);
