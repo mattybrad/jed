@@ -59,7 +59,15 @@ export default class Singer {
       var constriction = this.currentSyllable.getConstrictionValues(this.syllableProgress);
       this.vocalSynth.masterGain.gain.value = Math.min(1, this.syllableProgress / 0.05, (1 - this.syllableProgress) / 0.05); // temp
       this.vocalSynth.crossfader.setFader(voiced);
-      this.vocalSynth.constrictionFader.setFader(0.4 * constriction.amount);
+      this.vocalSynth.constrictionFader.setFader(constriction.amount);
+      var filters = {
+        "s": [0,0,0,0,0,0,0,0,0,0.02,0.1,0.9,1,0.7],
+        "sh": [0,0,0,0,0,0,0,0.1,0.3,0.5,0.7,1,0.7,0.4],
+        "th": [0,0,0,0,0.3,0.3,0.4,0.3,0.4,0.5,0.7,0.7,0.7,0.5],
+        "f": [0,0,0,0.3,0.5,0.5,0.7,0.7,0.8,0.8,0.7,0.7,0.7,0.4],
+        "default": [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]
+      }
+      this.vocalSynth.constrictionModel.setFilters(filters[constriction.shape||"default"]);
       this.vocalSynth.vocalTractModel.setFormant(0, this.currentFormant[0].frequency, 10, 1);
       this.vocalSynth.vocalTractModel.setFormant(1, this.currentFormant[1].frequency, 10, 0.6);
       this.vocalSynth.vocalTractModel.setFormant(2, this.currentFormant[2].frequency, 10, 0.3);

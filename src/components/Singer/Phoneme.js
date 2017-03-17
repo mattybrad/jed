@@ -37,12 +37,83 @@ export default class Phoneme {
       }
       break;
 
+      case "Z":
+      out = {
+        relativeDuration: 1,
+        formants: [
+          {position: 0, formants: FORMANTS["IY"]},
+          {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 1},
+          {position: 1, voiced: 1},
+        ],
+        constriction: [
+          {position: 0, shape: "s", amount: 1},
+          {position: 1, shape: "s", amount: 1},
+        ]
+      }
+      break;
+
+      case "DH":
+      out = {
+        relativeDuration: 1,
+        formants: [
+          {position: 0, formants: FORMANTS["IY"]},
+          {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 1},
+          {position: 1, voiced: 1},
+        ],
+        constriction: [
+          {position: 0, shape: "th", amount: 1},
+          {position: 1, shape: "th", amount: 1},
+        ]
+      }
+      break;
+
       case "IY":
       out = {
         relativeDuration: 5,
         formants: [
           {position: 0, formants: FORMANTS["IY"]},
           {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 1},
+          {position: 1, voiced: 1},
+        ],
+        constriction: [
+          {position: 0, shape: null, amount: 0},
+          {position: 1, shape: null, amount: 0},
+        ]
+      }
+      break;
+
+      case "EY":
+      out = {
+        relativeDuration: 5,
+        formants: [
+          {position: 0, formants: FORMANTS["EH"]},
+          {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 1},
+          {position: 1, voiced: 1},
+        ],
+        constriction: [
+          {position: 0, shape: null, amount: 0},
+          {position: 1, shape: null, amount: 0},
+        ]
+      }
+      break;
+
+      case "W":
+      out = {
+        relativeDuration: 2,
+        formants: [
+          {position: 0, formants: FORMANTS["UW"]},
         ],
         voiced: [
           {position: 0, voiced: 1},

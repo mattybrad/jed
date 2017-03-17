@@ -26,7 +26,7 @@ export default class VocalModel {
     var filterTH = [0,0,0,0,0.3,0.3,0.4,0.3,0.4,0.5,0.7,0.7,0.7,0.5];
     var filterSH = [0,0,0,0,0,0,0,0.1,0.3,0.5,0.7,1,0.7,0.4];
     var filterTest = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    this.constrictionModel.setFilters(filterF);
+    this.constrictionModel.setFilters(filterS);
     window.sf = function(filters) {
       this.constrictionModel.setFilters(filters);
     }.bind(this);
