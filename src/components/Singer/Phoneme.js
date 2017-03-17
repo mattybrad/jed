@@ -10,6 +10,15 @@ const FORMANTS = {
   "UW": [309,939,2320],
 }
 
+const DIPHTHONGS = {
+  "AW": ["AE","UW"],
+  "AY": ["AA","IY"],
+  "ER": ["AH","UH"],
+  "EY": ["EH","IY"],
+  "OW": ["AH","UW"],
+  "OY": ["AO","IY"],
+}
+
 export default class Phoneme {
 
   static isVowel(phoneme) {
@@ -18,10 +27,48 @@ export default class Phoneme {
 
   static getEvents(phoneme) {
     var out = null;
+
+    if(FORMANTS.hasOwnProperty(phoneme)) {
+      out = {
+        relativeDuration: 3,
+        formants: [
+          {position: 0, formants: FORMANTS[phoneme]},
+          {position: 1, formants: FORMANTS[phoneme]},
+        ],
+        voiced: [
+          {position: 0, voiced: 1},
+          {position: 1, voiced: 1},
+        ],
+        constriction: [
+          {position: 0, shape: null, amount: 0},
+          {position: 1, shape: null, amount: 0},
+        ]
+      }
+    }
+
+    if(DIPHTHONGS.hasOwnProperty(phoneme)) {
+      var diphthong = DIPHTHONGS[phoneme];
+      out = {
+        relativeDuration: 5,
+        formants: [
+          {position: 0, formants: FORMANTS[diphthong[0]]},
+          {position: 1, formants: FORMANTS[diphthong[1]]},
+        ],
+        voiced: [
+          {position: 0, voiced: 1},
+          {position: 1, voiced: 1},
+        ],
+        constriction: [
+          {position: 0, shape: null, amount: 0},
+          {position: 1, shape: null, amount: 0},
+        ]
+      }
+    }
+
     switch(phoneme) {
       case "S":
       out = {
-        relativeDuration: 1,
+        relativeDuration: 2,
         formants: [
           {position: 0, formants: FORMANTS["IY"]},
           {position: 1, formants: FORMANTS["IY"]},
@@ -39,7 +86,7 @@ export default class Phoneme {
 
       case "Z":
       out = {
-        relativeDuration: 1,
+        relativeDuration: 2,
         formants: [
           {position: 0, formants: FORMANTS["IY"]},
           {position: 1, formants: FORMANTS["IY"]},
@@ -55,9 +102,27 @@ export default class Phoneme {
       }
       break;
 
+      case "TH":
+      out = {
+        relativeDuration: 2,
+        formants: [
+          {position: 0, formants: FORMANTS["IY"]},
+          {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 0},
+          {position: 1, voiced: 0},
+        ],
+        constriction: [
+          {position: 0, shape: "th", amount: 1},
+          {position: 1, shape: "th", amount: 1},
+        ]
+      }
+      break;
+
       case "DH":
       out = {
-        relativeDuration: 1,
+        relativeDuration: 2,
         formants: [
           {position: 0, formants: FORMANTS["IY"]},
           {position: 1, formants: FORMANTS["IY"]},
@@ -73,9 +138,27 @@ export default class Phoneme {
       }
       break;
 
-      case "IY":
+      case "SH":
       out = {
-        relativeDuration: 5,
+        relativeDuration: 2,
+        formants: [
+          {position: 0, formants: FORMANTS["IY"]},
+          {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 0},
+          {position: 1, voiced: 0},
+        ],
+        constriction: [
+          {position: 0, shape: "sh", amount: 1},
+          {position: 1, shape: "sh", amount: 1},
+        ]
+      }
+      break;
+
+      case "ZH":
+      out = {
+        relativeDuration: 2,
         formants: [
           {position: 0, formants: FORMANTS["IY"]},
           {position: 1, formants: FORMANTS["IY"]},
@@ -85,18 +168,53 @@ export default class Phoneme {
           {position: 1, voiced: 1},
         ],
         constriction: [
-          {position: 0, shape: null, amount: 0},
-          {position: 1, shape: null, amount: 0},
+          {position: 0, shape: "sh", amount: 1},
+          {position: 1, shape: "sh", amount: 1},
         ]
       }
       break;
 
-      case "EY":
+      case "F":
       out = {
-        relativeDuration: 5,
+        relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["EH"]},
+          {position: 0, formants: FORMANTS["IY"]},
           {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 0},
+          {position: 1, voiced: 0},
+        ],
+        constriction: [
+          {position: 0, shape: "f", amount: 1},
+          {position: 1, shape: "f", amount: 1},
+        ]
+      }
+      break;
+
+      case "V":
+      out = {
+        relativeDuration: 2,
+        formants: [
+          {position: 0, formants: FORMANTS["IY"]},
+          {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 1},
+          {position: 1, voiced: 1},
+        ],
+        constriction: [
+          {position: 0, shape: "f", amount: 1},
+          {position: 1, shape: "f", amount: 1},
+        ]
+      }
+      break;
+
+      case "W":
+      out = {
+        relativeDuration: 2,
+        formants: [
+          {position: 0, formants: FORMANTS["UW"]},
         ],
         voiced: [
           {position: 0, voiced: 1},
@@ -109,11 +227,11 @@ export default class Phoneme {
       }
       break;
 
-      case "W":
+      case "Y":
       out = {
         relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["UW"]},
+          {position: 0, formants: FORMANTS["IY"]},
         ],
         voiced: [
           {position: 0, voiced: 1},
