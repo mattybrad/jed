@@ -25,7 +25,11 @@ export default class Phoneme {
     return "AEIOU".indexOf(phoneme.charAt(0))>-1;
   }
 
-  static getEvents(phoneme) {
+  static getEvents(phoneme, prevVowel, nextVowel) {
+    var vowel = "UH";
+    if(prevVowel) vowel = prevVowel;
+    else if(nextVowel) vowel = nextVowel;
+
     var out = null;
 
     if(FORMANTS.hasOwnProperty(phoneme)) {
@@ -70,8 +74,8 @@ export default class Phoneme {
       out = {
         relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["IY"]},
-          {position: 1, formants: FORMANTS["IY"]},
+          {position: 0, formants: FORMANTS[vowel]},
+          {position: 1, formants: FORMANTS[vowel]},
         ],
         voiced: [
           {position: 0, voiced: 0},
@@ -88,8 +92,8 @@ export default class Phoneme {
       out = {
         relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["IY"]},
-          {position: 1, formants: FORMANTS["IY"]},
+          {position: 0, formants: FORMANTS[vowel]},
+          {position: 1, formants: FORMANTS[vowel]},
         ],
         voiced: [
           {position: 0, voiced: 1},
@@ -106,8 +110,8 @@ export default class Phoneme {
       out = {
         relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["IY"]},
-          {position: 1, formants: FORMANTS["IY"]},
+          {position: 0, formants: FORMANTS[vowel]},
+          {position: 1, formants: FORMANTS[vowel]},
         ],
         voiced: [
           {position: 0, voiced: 0},
@@ -124,8 +128,8 @@ export default class Phoneme {
       out = {
         relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["IY"]},
-          {position: 1, formants: FORMANTS["IY"]},
+          {position: 0, formants: FORMANTS[vowel]},
+          {position: 1, formants: FORMANTS[vowel]},
         ],
         voiced: [
           {position: 0, voiced: 1},
@@ -142,8 +146,8 @@ export default class Phoneme {
       out = {
         relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["IY"]},
-          {position: 1, formants: FORMANTS["IY"]},
+          {position: 0, formants: FORMANTS[vowel]},
+          {position: 1, formants: FORMANTS[vowel]},
         ],
         voiced: [
           {position: 0, voiced: 0},
@@ -160,8 +164,8 @@ export default class Phoneme {
       out = {
         relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["IY"]},
-          {position: 1, formants: FORMANTS["IY"]},
+          {position: 0, formants: FORMANTS[vowel]},
+          {position: 1, formants: FORMANTS[vowel]},
         ],
         voiced: [
           {position: 0, voiced: 1},
@@ -178,8 +182,8 @@ export default class Phoneme {
       out = {
         relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["IY"]},
-          {position: 1, formants: FORMANTS["IY"]},
+          {position: 0, formants: FORMANTS[vowel]},
+          {position: 1, formants: FORMANTS[vowel]},
         ],
         voiced: [
           {position: 0, voiced: 0},
@@ -196,8 +200,8 @@ export default class Phoneme {
       out = {
         relativeDuration: 2,
         formants: [
-          {position: 0, formants: FORMANTS["IY"]},
-          {position: 1, formants: FORMANTS["IY"]},
+          {position: 0, formants: FORMANTS[vowel]},
+          {position: 1, formants: FORMANTS[vowel]},
         ],
         voiced: [
           {position: 0, voiced: 1},

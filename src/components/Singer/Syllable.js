@@ -17,6 +17,20 @@ export default class Syllable {
     console.log(sounds);
   }
 
+  findPrevVowel(soundIndex) {
+    for(var i = soundIndex - 1; i >= 0; i --) {
+      if(Phoneme.isVowel(this.sounds[i])) return this.sounds[i];
+    }
+    return null;
+  }
+
+  findNextVowel(soundIndex) {
+    for(var i = soundIndex + 1; i < this.sounds.length; i ++) {
+      if(Phoneme.isVowel(this.sounds[i])) return this.sounds[i];
+    }
+    return null;
+  }
+
   placeEvents() {
     var formantEvents = [];
     var voicedEvents = [];
@@ -24,7 +38,7 @@ export default class Syllable {
     var events;
     var relativePosition = 0;
     for(var i = 0; i < this.sounds.length; i ++) {
-      events = Phoneme.getEvents(this.sounds[i]);
+      events = Phoneme.getEvents(this.sounds[i], this.findPrevVowel(i), this.findNextVowel(i));
       if(events) {
         if(events.formants) {
           events.formants.forEach(function(e) {
