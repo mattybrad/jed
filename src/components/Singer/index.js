@@ -55,8 +55,10 @@ export default class Singer {
   update() {
     if(this.currentSyllable) {
       this.currentFormant = this.currentSyllable.getFormantValues(this.syllableProgress) || this.currentFormant;
-      var isOpen = this.currentSyllable.getTractStatus(this.syllableProgress);
-      this.vocalSynth.crossfader.setFader(isOpen ? 0 : 1);
+      var voiced = this.currentSyllable.getVoicedValue(this.syllableProgress);
+      var constriction = this.currentSyllable.getConstrictionValues(this.syllableProgress);
+      this.vocalSynth.crossfader.setFader(voiced);
+      this.vocalSynth.constrictionFader.setFader(constriction.amount);
       this.vocalSynth.vocalTractModel.setFormant(0, this.currentFormant[0].frequency, 10, 1);
       this.vocalSynth.vocalTractModel.setFormant(1, this.currentFormant[1].frequency, 10, 0.6);
       this.vocalSynth.vocalTractModel.setFormant(2, this.currentFormant[2].frequency, 10, 0.3);

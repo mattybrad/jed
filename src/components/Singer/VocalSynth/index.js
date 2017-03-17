@@ -35,8 +35,8 @@ export default class VocalModel {
     this.noiseGenerator.start();
     this.constrictionNoise.start();
 
-    this.pulseTrain.connect(this.crossfader.firstInput);
-    this.noiseGenerator.connect(this.crossfader.secondInput);
+    this.pulseTrain.connect(this.crossfader.secondInput);
+    this.noiseGenerator.connect(this.crossfader.firstInput);
     this.crossfader.connect(this.vocalTractModel.input);
     this.constrictionNoise.connect(this.constrictionModel.input);
     this.vocalTractModel.connect(this.constrictionModel.input.gain);

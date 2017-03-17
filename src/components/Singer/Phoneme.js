@@ -10,22 +10,7 @@ const FORMANTS = {
   "UW": [309,939,2320],
 }
 
-// static getVowelSequence(baseVowel) {
-//   var diphthongs = {
-//     "AW": ["AE","UW"],
-//     "AY": ["AA","IY"],
-//     "ER": ["AH","UH"],
-//     "EY": ["EH","IY"],
-//     "OW": ["AH","UW"],
-//     "OY": ["AO","IY"],
-//   }
-//   return (
-//     dipthongs.hasOwnProperty(baseVowel) ? diphthongs[baseVowel] : [baseVowel, baseVowel]
-//   )
-// }
-
 export default class Phoneme {
-  static get
 
   static isVowel(phoneme) {
     return "AEIOU".indexOf(phoneme.charAt(0))>-1;
@@ -33,88 +18,41 @@ export default class Phoneme {
 
   static getEvents(phoneme) {
     var out = null;
-
-    if(FORMANTS.hasOwnProperty(phoneme)) {
-      return [
-        {
-          formants: FORMANTS[phoneme]
-        },
-        {
-          formants: FORMANTS[phoneme]
-        }
-      ]
-    }
-
     switch(phoneme) {
-      case "EH":
-      out = [
-        {
-          formants: FORMANTS["EH"]
-        },
-        {
-          formants: FORMANTS["EH"]
-        }
-      ]
+      case "S":
+      out = {
+        relativeDuration: 1,
+        formants: [
+          {position: 0, formants: FORMANTS["IY"]},
+          {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 0},
+          {position: 1, voiced: 0},
+        ],
+        constriction: [
+          {position: 0, shape: "s", amount: 1},
+          {position: 1, shape: "s", amount: 1},
+        ]
+      }
       break;
 
       case "IY":
-      out = [
-        {
-          formants: FORMANTS["IY"]
-        },
-        {
-          formants: FORMANTS["IY"]
-        }
-      ]
-      break;
-
-      case "EY":
-      out = [
-        {
-          formants: FORMANTS["EH"]
-        },
-        {
-          formants: FORMANTS["IY"]
-        }
-      ]
-      break;
-
-      case "HH":
-      out = [
-        {
-          tractOpen: false
-        },
-        {
-          tractOpen: false
-        }
-      ]
-      break;
-
-      case "S":
-      out = [
-        {
-          tractOpen: false
-        },
-        {
-          tractOpen: false
-        }
-      ]
-      break;
-
-      case "Y":
-      out = [
-        {
-          formants: FORMANTS["IY"]
-        }
-      ]
-      break;
-
-      case "W":
-      out = [
-        {
-          formants: FORMANTS["UW"]
-        }
-      ]
+      out = {
+        relativeDuration: 3,
+        formants: [
+          {position: 0, formants: FORMANTS["IY"]},
+          {position: 1, formants: FORMANTS["IY"]},
+        ],
+        voiced: [
+          {position: 0, voiced: 1},
+          {position: 1, voiced: 1},
+        ],
+        constriction: [
+          {position: 0, shape: null, amount: 0},
+          {position: 1, shape: null, amount: 0},
+        ]
+      }
       break;
     }
     return JSON.parse(JSON.stringify(out));

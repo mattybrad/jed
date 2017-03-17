@@ -13,35 +13,63 @@ export default class Syllable {
     for(var i = 0; i < sounds.length; i ++) {
       this.sounds[i] = sounds[i].replace(/[0-9]/g, "")
     }
-    this.placeNodes();
+    this.placeEvents();
     console.log(sounds);
   }
 
-  placeNodes() {
-    var nodes = [];
-    var n;
-    var vowelFoundYet = false;
+  placeEvents() {
+    var formantEvents = [];
+    var voicedEvents = [];
+    var constrictionEvents = [];
+    var events;
+    var relativePosition = 0;
     for(var i = 0; i < this.sounds.length; i ++) {
-      n = Phoneme.getEvents(this.sounds[i]);
-      if(n) {
-        nodes = nodes.concat(n);
+      events = Phoneme.getEvents(this.sounds[i]);
+      if(events) {
+        if(events.formants) {
+          events.formants.forEach(function(e) {
+            e.position = e.position * events.relativeDuration + relativePosition;
+            formantEvents.push(e);
+          });
+        }
+        if(events.voiced) {
+          events.voiced.forEach(function(e) {
+            e.position = e.position * events.relativeDuration + relativePosition;
+            voicedEvents.push(e);
+          });
+        }
+        if(events.constriction) {
+          events.constriction.forEach(function(e) {
+            e.position = e.position * events.relativeDuration + relativePosition;
+            constrictionEvents.push(e);
+          });
+        }
       }
+      relativePosition += events.relativeDuration;
     }
 
-    nodes.forEach(function(n, i){
-      n.position = i / (nodes.length - 1);
+    formantEvents.forEach(function(e){
+      e.position = e.position / relativePosition;
+    })
+    voicedEvents.forEach(function(e){
+      e.position = e.position / relativePosition;
+    })
+    constrictionEvents.forEach(function(e){
+      e.position = e.position / relativePosition;
     })
 
-    this.nodes = nodes;
+    this.formantEvents = formantEvents;
+    this.voicedEvents = voicedEvents;
+    this.constrictionEvents = constrictionEvents;
   }
 
   getFormantValues(position) {
-    var n = this.nodes;
+    var e = this.formantEvents;
     var prev = null;
     var next = null;
-    for(var i = 0; i < n.length && !next; i ++) {
-      if(n[i].formants && position >= n[i].position) prev = n[i];
-      if(n[i].formants && position < n[i].position) next = n[i];
+    for(var i = 0; i < e.length && !next; i ++) {
+      if(e[i].formants && position >= e[i].position) prev = e[i];
+      if(e[i].formants && position < e[i].position) next = e[i];
     }
     if(prev&&next) {
       // if two formants are defined, return a lerped mix of the two
@@ -60,15 +88,26 @@ export default class Syllable {
     }
   }
 
-  getTractStatus(position) {
-    var n = this.nodes;
+  getVoicedValue(position) {
+    var e = this.voicedEvents;
     var prev = null;
     var next = null;
-    for(var i = 0; i < n.length && !next; i ++) {
-      if(position >= n[i].position) prev = n[i];
-      if(position < n[i].position) next = n[i];
+    for(var i = 0; i < e.length && !next; i ++) {
+      if(position >= e[i].position) prev = e[i];
+      if(position < e[i].position) next = e[i];
     }
-    return prev.tractOpen !== false;
+    return prev.voiced;
+  }
+
+  getConstrictionValues(position) {
+    var e = this.constrictionEvents;
+    var prev = null;
+    var next = null;
+    for(var i = 0; i < e.length && !next; i ++) {
+      if(position >= e[i].position) prev = e[i];
+      if(position < e[i].position) next = e[i];
+    }
+    return prev;
   }
 
   triggerWavetables(position) {
