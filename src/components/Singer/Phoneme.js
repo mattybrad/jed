@@ -216,7 +216,7 @@ export default class Phoneme {
 
       case "W":
       out = {
-        relativeDuration: 2,
+        relativeDuration: 1,
         formants: [
           {position: 0, formants: FORMANTS["UW"]},
         ],
@@ -233,7 +233,7 @@ export default class Phoneme {
 
       case "Y":
       out = {
-        relativeDuration: 2,
+        relativeDuration: 1,
         formants: [
           {position: 0, formants: FORMANTS["IY"]},
         ],

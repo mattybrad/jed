@@ -14,7 +14,7 @@ export default class VocalModel {
     this.crossfader = new Crossfader(actx);
     this.vocalTractModel = new VocalTractModel(actx);
     this.constrictionNoise = new NoiseGenerator(actx, 10000, function() {
-      return 1 - 0.5 * Math.random();
+      return 0.3 - 0.2 * Math.random();
     });
     this.constrictionFader = new Crossfader(actx);
     this.constrictionModel = new FilterBank(actx);

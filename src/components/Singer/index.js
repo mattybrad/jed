@@ -45,6 +45,8 @@ export default class Singer {
   nextSyllable() {
     if(this.syllableQueue.length) {
       this.currentSyllable = new Syllable(this.syllableQueue.shift());
+      var randomNote = 28 + [0,2,4,5,7][Math.floor(Math.random()*5)];
+      this.vocalSynth.pulseTrain.osc.frequency.value = Math.pow(2, (randomNote-49)/12) * 440;
     } else {
       this.nextWord();
       if(this.currentWord) this.nextSyllable();
