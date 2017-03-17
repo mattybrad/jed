@@ -23,6 +23,8 @@ export default class Param extends React.Component {
           type="range"
           value={this.props.value}
           name={this.props.name}
+          min={this.props.min}
+          max={this.props.max}
           onChange={this.onChange.bind(this)}
         />
         <span>{this.props.value}</span>

@@ -2,8 +2,12 @@
   text-align: left;
 }
 
+.this input {
+  margin: 10px;
+}
+
 .this label {
   display: inline-block;
   text-align: right;
-  width: 100px;
+  width: 150px;
 }
