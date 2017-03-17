@@ -25,6 +25,7 @@ export default class Param extends React.Component {
           name={this.props.name}
           min={this.props.min}
           max={this.props.max}
+          step={this.props.max-this.props.min<10?0.01:1}
           onChange={this.onChange.bind(this)}
         />
         <span>{this.props.value}</span>
