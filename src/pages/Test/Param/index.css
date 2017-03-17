@@ -1,0 +1,9 @@
+.this {
+  text-align: left;
+}
+
+.this label {
+  display: inline-block;
+  text-align: right;
+  width: 100px;
+}
