@@ -16,6 +16,26 @@ export default class Home extends React.Component {
     }
     this.singer = new Singer();
     this.singer.init(this.onSingerReady.bind(this));
+    setInterval(this.tempIncrementSlider.bind(this), 20);
+  }
+
+  tempIncrementSlider() {
+    var oldDirection = this.state.sliderDirectionPositive;
+    var newDirection = this.state.sliderDirectionPositive;
+    var sliderValue = oldDirection ? this.state.sliderValue + 0.01 : this.state.sliderValue - 0.01;
+    if(oldDirection && sliderValue > 0.99) {
+      newDirection = false;
+    } else if(!oldDirection && sliderValue < 0.01) {
+      newDirection = true;
+    }
+    var syllableProgress = newDirection ? sliderValue : 1 - sliderValue;
+    if(newDirection != oldDirection) this.singer.nextSyllable();
+    this.singer.syllableProgress = syllableProgress;
+    this.setState({
+      sliderValue: sliderValue,
+      sliderDirectionPositive: newDirection,
+      syllableProgress: syllableProgress
+    })
   }
 
   onSingerReady() {

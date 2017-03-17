@@ -45,7 +45,7 @@ export default class Syllable {
           });
         }
       }
-      relativePosition += events.relativeDuration;
+      relativePosition += events.relativeDuration + (i<this.sounds.length - 1?0.5:0);
     }
 
     formantEvents.forEach(function(e){
@@ -96,7 +96,9 @@ export default class Syllable {
       if(position >= e[i].position) prev = e[i];
       if(position < e[i].position) next = e[i];
     }
-    return prev.voiced;
+    var positionDelta = next.position - prev.position;
+    var adjustedPosition = (position - prev.position) / positionDelta;
+    return lerp(prev.voiced, next.voiced, adjustedPosition);
   }
 
   getConstrictionValues(position) {
@@ -107,7 +109,12 @@ export default class Syllable {
       if(position >= e[i].position) prev = e[i];
       if(position < e[i].position) next = e[i];
     }
-    return prev;
+    var positionDelta = next.position - prev.position;
+    var adjustedPosition = (position - prev.position) / positionDelta;
+    return {
+      amount: lerp(prev.amount, next.amount, adjustedPosition),
+      shape: prev.shape
+    }
   }
 
   triggerWavetables(position) {
