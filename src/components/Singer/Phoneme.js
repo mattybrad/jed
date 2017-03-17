@@ -39,7 +39,7 @@ export default class Phoneme {
 
       case "IY":
       out = {
-        relativeDuration: 3,
+        relativeDuration: 5,
         formants: [
           {position: 0, formants: FORMANTS["IY"]},
           {position: 1, formants: FORMANTS["IY"]},

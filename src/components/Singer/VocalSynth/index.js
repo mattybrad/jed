@@ -13,7 +13,7 @@ export default class VocalModel {
     this.noiseGenerator = new NoiseGenerator(actx, 5000);
     this.crossfader = new Crossfader(actx);
     this.vocalTractModel = new VocalTractModel(actx);
-    this.constrictionNoise = new NoiseGenerator(actx, 20000, function() {
+    this.constrictionNoise = new NoiseGenerator(actx, 10000, function() {
       return 1 - 0.5 * Math.random();
     });
     this.constrictionFader = new Crossfader(actx);
@@ -26,7 +26,7 @@ export default class VocalModel {
     var filterTH = [0,0,0,0,0.3,0.3,0.4,0.3,0.4,0.5,0.7,0.7,0.7,0.5];
     var filterSH = [0,0,0,0,0,0,0,0.1,0.3,0.5,0.7,1,0.7,0.4];
     var filterTest = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    this.constrictionModel.setFilters(filterS);
+    this.constrictionModel.setFilters(filterF);
     window.sf = function(filters) {
       this.constrictionModel.setFilters(filters);
     }.bind(this);
