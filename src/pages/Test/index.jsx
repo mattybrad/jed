@@ -18,20 +18,29 @@ export default class Test extends React.Component {
       f3Freq: 2636,
       f3Q: 10,
       f3Gain: 1,
-      crossfade: 0,
-      constrictionFade: 0,
+      crossfade: 1,
+      constrictionFade: 1,
       lipFreq: 1
     }
     this.vocalSynth = new VocalSynth();
   }
 
+  componentDidMount() {
+    this.updateSynth();
+  }
+
   componentDidUpdate() {
+    this.updateSynth();
+  }
+
+  updateSynth() {
     var v = this.vocalSynth;
     v.crossfader.setFader(this.state.crossfade);
     v.vocalTractModel.setFormant(0,this.state.f1Freq,this.state.f1Q,this.state.f1Gain);
     v.vocalTractModel.setFormant(1,this.state.f2Freq,this.state.f2Q,this.state.f2Gain);
     v.vocalTractModel.setFormant(2,this.state.f3Freq,this.state.f3Q,this.state.f3Gain);
     v.lipModel.filter.frequency.value = this.state.lipFreq;
+    v.constrictionFader.setFader(this.state.constrictionFade);
   }
 
   onChange(param, ev) {
