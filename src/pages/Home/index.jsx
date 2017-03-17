@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './index.css';
 import Singer from '../../components/Singer';
+import Face from '../../components/Face';
 
 export default class Home extends React.Component {
 
@@ -95,6 +96,7 @@ export default class Home extends React.Component {
               /><br/>
               <input type="submit" value="Load words"></input>
             </form>
+            <Face/>
           </div>
           :
           <p>Loading...</p>
