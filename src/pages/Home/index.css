@@ -2,6 +2,10 @@
 
 }
 
+.this input[type=range] {
+  width: 400px;
+}
+
 .this textarea {
   width: 500px;
   height: 200px;
