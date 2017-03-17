@@ -25,6 +25,7 @@ class App extends React.Component {
         <Router history={browserHistory}>
           <Route path="/" component={Main}>
             <IndexRoute component={Pages.Home} />
+            <Route path="test" component={Pages.Test} />
           </Route>
         </Router>
       </Provider>

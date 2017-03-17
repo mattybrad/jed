@@ -7,7 +7,6 @@ export default class Home extends React.Component {
 
   constructor(props) {
     super(props);
-    this.actx = new AudioContext();
     this.state = {
       rawWords: "hey hey hey",
       sliderValue: 0,
