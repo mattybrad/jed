@@ -8,6 +8,7 @@ import VocalSynth from './VocalSynth';
 export default class Singer {
   constructor() {
     this.vocalSynth = new VocalSynth();
+    this.onMouthMovement = function(){};
   }
 
   init(callback) {
@@ -69,6 +70,7 @@ export default class Singer {
         "f": [0,0,0,0.3,0.5,0.5,0.7,0.7,0.8,0.8,0.7,0.7,0.7,0.4],
         "default": [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]
       }
+      this.onMouthMovement();
       this.vocalSynth.constrictionModel.setFilters(filters[constriction.shape||"default"]);
       this.vocalSynth.vocalTractModel.setFormant(0, this.currentFormant[0].frequency, 10, 1);
       this.vocalSynth.vocalTractModel.setFormant(1, this.currentFormant[1].frequency, 10, 0.6);

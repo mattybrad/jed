@@ -17,7 +17,14 @@ export default class Home extends React.Component {
     }
     this.singer = new Singer();
     this.singer.init(this.onSingerReady.bind(this));
+    this.singer.onMouthMovement = this.onMouthMovement.bind(this);
     //setInterval(this.tempIncrementSlider.bind(this), 50);
+  }
+
+  onMouthMovement() {
+    this.setState({
+      mouthShape: "t"
+    })
   }
 
   tempIncrementSlider() {
@@ -96,7 +103,7 @@ export default class Home extends React.Component {
               /><br/>
               <input type="submit" value="Load words"></input>
             </form>
-            <Face/>
+            <Face mouthShape={this.state.mouthShape} />
           </div>
           :
           <p>Loading...</p>
